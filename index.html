@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head><title>Socket IO App</title></head>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io();
+		socket.emit('clientEvent', 'sent from client');
+		var sendMessage = function(message) {
+			socket.emit('clientMessage', message);
+		}
+		socket.on('userCount', function(count) {
+			document.getElementById('user-count').innerHTML = count.desc + '<br />'
+		})
+		socket.on('broadcast-log', function(log) {
+			document.getElementById('chat-log').innerHTML = '<br>' + log
+		})
+	</script>
+	<body>
+		<h1>Socket IO Chat</h1>
+		<div id="user-count">
+		</div>
+		<form onSubmit="event.preventDefault(); sendMessage(message.value);">
+			Type a message: <br>
+			<input type="text" name="message">
+			<input type="submit" value="Submit">
+		</form>
+		<div id="chat-log">
+		</div>
+	</body>
+</html>
+
